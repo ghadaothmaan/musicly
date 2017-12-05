@@ -1,0 +1,64 @@
+BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS `Track` (
+	`TrackID`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	`AlbumID`	INTEGER,
+	`TrackName`	TEXT NOT NULL,
+	`TrackFeaturedArtist`	TEXT,
+	`TrackReleaseDate`	TEXT NOT NULL,
+	`TrackGenre`	TEXT NOT NULL,
+	`TrackLength`	REAL NOT NULL,
+	`TrackLyrics`	TEXT NOT NULL,
+	FOREIGN KEY(`AlbumID`) REFERENCES `Album`(`AlbumID`)
+);
+INSERT INTO `Track` VALUES (1,1,'Oblivious',NULL,'2009','',4.22,'');
+INSERT INTO `Track` VALUES (2,1,'Fairytale',NULL,'2009','',5.14,'');
+INSERT INTO `Track` VALUES (3,1,'Aria',NULL,'2009','',5.24,'');
+CREATE TABLE IF NOT EXISTS `Playlist / Track` (
+	`PlaylistID`	INTEGER,
+	`TrackID`	INTEGER,
+	FOREIGN KEY(`PlaylistID`) REFERENCES `Playlist`(`PlaylistID`),
+	FOREIGN KEY(`TrackID`) REFERENCES `Track`(`TrackID`)
+);
+INSERT INTO `Playlist / Track` VALUES (1,1);
+INSERT INTO `Playlist / Track` VALUES (1,2);
+INSERT INTO `Playlist / Track` VALUES (1,3);
+CREATE TABLE IF NOT EXISTS `Playlist` (
+	`PlaylistID`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	`PlaylistName`	TEXT NOT NULL,
+	`PlaylistDescription`	TEXT NOT NULL
+);
+INSERT INTO `Playlist` VALUES (1,'JapanesePlaylist','Japanese songs');
+CREATE TABLE IF NOT EXISTS `Band / Artist` (
+	`BandID`	INTEGER,
+	`ArtistID`	INTEGER,
+	FOREIGN KEY(`ArtistID`) REFERENCES `Artist`(`ArtistID`),
+	FOREIGN KEY(`BandID`) REFERENCES `Band`(`BandID`)
+);
+INSERT INTO `Band / Artist` VALUES (1,1);
+INSERT INTO `Band / Artist` VALUES (1,2);
+INSERT INTO `Band / Artist` VALUES (1,3);
+CREATE TABLE IF NOT EXISTS `Band` (
+	`BandID`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	`BandName`	TEXT NOT NULL
+);
+INSERT INTO `Band` VALUES (1,'Kalafina');
+CREATE TABLE IF NOT EXISTS `Artist` (
+	`ArtistID`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	`BandID`	INTEGER,
+	`ArtistName`	TEXT NOT NULL,
+	`ArtistDOB`	TEXT NOT NULL,
+	FOREIGN KEY(`BandID`) REFERENCES `Band`(`BandID`)
+);
+INSERT INTO `Artist` VALUES (1,1,'Wakana Otaki','10/12/1984');
+INSERT INTO `Artist` VALUES (2,1,'Keiko Kubota','05/12/1985');
+INSERT INTO `Artist` VALUES (3,1,'Hikaru Masai','02/07/1987');
+CREATE TABLE IF NOT EXISTS `Album` (
+	`AlbumID`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	`BandID`	INTEGER,
+	`AlbumTitle`	TEXT NOT NULL,
+	`AlbumNumOfSongs`	INTEGER NOT NULL,
+	FOREIGN KEY(`BandID`) REFERENCES `Band`(`BandID`)
+);
+INSERT INTO `Album` VALUES (1,1,'Seventh Heaven',14);
+INSERT INTO `Album` VALUES (2,1,'Red Moon',13);
+COMMIT;
