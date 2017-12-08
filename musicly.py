@@ -131,17 +131,23 @@ def viewHome():
                 bandID = band.findID(bandName)
                 band.viewBandArtists(bandID, bandName)
 
-                option = input("\n1. Add Artist \t\t2. Delete Artist\n3. Back\n>> ")
-
-                # add artist
+                option = input("\n1. Play Band\t\t2. Play Artist\n2. Add Artist\t\t4. Delete Artist\n5. Back\n>> ")
+                # play songs
                 if option == "1":
+                    band.playBandTracks(bandID)
+                elif option == "2":
+                    artistName = input("Artist Name: ")
+                    artistID = artist.findID(artistName)
+                    band.playArtistTracks(bandID, artistID)
+                # add artist
+                elif option == "3":
                     artistName = input("Artist Name: ")
                     artistDOB = input("Artist Date of Birth: ")
                     bandID = band.findID(bandName)
                     artist.addArtist(artistName, artistDOB, bandID)
 
                 # delete artist
-                elif option == "2":
+                elif option == "4":
                     artistName = input("Artist Name: ")
                     artistID = artist.findID(artistName)
                     artist.deleteArtist(artistID)

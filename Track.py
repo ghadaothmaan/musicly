@@ -26,7 +26,7 @@ class Track:
         print("---------------------------------------------------------------------")
         print("Tracks: ")
         for row in cursor:
-            print("*", row[0], '\t\t\t', row[2], '\t\t\t', row[1])
+            print("*", row[0], '\t\t', row[2], '\t\t', row[1])
 
     # view track description
     def viewTrack(self, trackID):
@@ -130,15 +130,18 @@ class Track:
         trackList = []
         for row in cursor:
             trackPath = row[0]
-            trackList.append(trackPath)
+            trackName = row[1]
+            t = [trackPath, trackName]
+            trackList.append(t)
 
         random.shuffle(trackList)
-        trackList = list(map(str, trackList))
+        # trackList = list(map(str, trackList))
+
 
         for i in trackList:
-            print("->", "msh 3rfa ageb el esm")
+            print("->", i[1])
             pygame.mixer.init()
-            pygame.mixer.music.load(i)
+            pygame.mixer.music.load(i[0])
             pygame.mixer.music.play()
             while pygame.mixer.music.get_busy():
                 pygame.time.Clock().tick(5)
@@ -156,7 +159,6 @@ class Track:
         cursor = conn.execute(query)
         for row in cursor:
             print("*", row[0])
-
 
 # testing
 # t = Track()
